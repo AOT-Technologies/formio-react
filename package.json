@@ -1,6 +1,6 @@
 {
 	"name": "@aot-technologies/formio-react",
-	"version": "1.0.2-test2",
+	"version": "1.0.3",
 	"description": "React renderer for formsflow form.io forms.",
 	"main": "lib/index.js",
 	"scripts": {
