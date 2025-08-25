@@ -8,7 +8,7 @@ A [React](http://facebook.github.io/react/) library for rendering out forms base
 
 ```bash
 npm install @aot-technologies/formio-react --save
-npm install @aot-technologies/formiojs --save
+npm install @aot-technologies/formiojs --save // Install @aot-technologies/formiojs since it is a peerDependency
 ```
 
 ### yarn
@@ -63,7 +63,11 @@ Use the authentication context provided by `useFormioContext` to evaluate the Fo
 
 ```tsx
 import { createRoot } from 'react-dom/client';
-import { useFormioContext, FormGrid, FormioProvider } from '@aot-technologies/formio-react';
+import {
+	useFormioContext,
+	FormGrid,
+	FormioProvider,
+} from '@aot-technologies/formio-react';
 
 const App = () => {
 	const { isAuthenticated } = useFormioContext();
@@ -307,7 +311,7 @@ A React component wrapper around [a Form.io form](https://help.form.io/developer
 | `url`               | `string`                                                                                |         | The url of the form definition. Used in conjunction with a JSON form definition passed to `src`, this is used for file upload, OAuth, and other components or actions that need to know the URL of the Form.io form for further processing. The form will not be loaded from this url and the submission will not be saved here either. |
 | `submission`        | `JSON`                                                                                  |         | Submission data to fill the form. You can either load a previous submission or create a submission with some pre-filled data. If you do not provide a submissions the form will initialize an empty submission using default values from the form.                                                                                      |
 | `options`           | `FormOptions`                                                                           |         | The form options. See [here](https://help.form.io/developers/form-development/form-renderer#form-renderer-options) for more details.                                                                                                                                                                                                    |
-| `onFormReady`       | `(instance: Webform) => void`                                                           |         | A callback function that gets called when the form has rendered. It is useful for accessing the underlying @aot-technologies/formiojs Webform instance.                                                                                                                                                                                                 |
+| `onFormReady`       | `(instance: Webform) => void`                                                           |         | A callback function that gets called when the form has rendered. It is useful for accessing the underlying @aot-technologies/formiojs Webform instance.                                                                                                                                                                                 |
 | `onSubmit`          | `(submission: JSON, saved?: boolean) => void`                                           |         | A callback function that gets called when the submission has started. If `src` is not a Form.io server URL, this will be the final submit event.                                                                                                                                                                                        |
 | `onCancelSubmit`    | `() => void`                                                                            |         | A callback function that gets called when the submission has been canceled.                                                                                                                                                                                                                                                             |
 | `onSubmitDone`      | `(submission: JSON) => void`                                                            |         | A callback function that gets called when the submission has successfully been made to the server. This will only fire if `src` is set to a Form.io server URL.                                                                                                                                                                         |
@@ -445,7 +449,8 @@ import dynamic from 'next/dynamic';
 import { Webform } from '@aot-technologies/formiojs';
 
 const Form = dynamic(
-	() => import('@aot-technologies/formio-react').then((module) => module.Form),
+	() =>
+		import('@aot-technologies/formio-react').then((module) => module.Form),
 	{ ssr: false },
 );
 
@@ -485,7 +490,7 @@ A React component wrapper around [a Form.io form builder](https://help.form.io/d
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `initialForm`       | `FormType`                                                                                                                                                 |         | The JSON form definition of the initial form to be rendered in the builder. Oftentimes, this must be a stable reference; otherwise it may destroy and recreate the underlying builder instance and cause unexpected behavior. |
 | `options`           | `FormBuilderOptions`                                                                                                                                       |         | The form builder options. See [here](https://help.form.io/developers/form-development/form-builder#form-builder-options) for more details.                                                                                    |
-| `onBuilderReady`    | `(instance: FormBuilder) => void`                                                                                                                          |         | A callback function that gets called when the form builder has rendered. It is useful for accessing the underlying @aot-technologies/formiojs FormBuilder instance.                                                                           |
+| `onBuilderReady`    | `(instance: FormBuilder) => void`                                                                                                                          |         | A callback function that gets called when the form builder has rendered. It is useful for accessing the underlying @aot-technologies/formiojs FormBuilder instance.                                                           |
 | `onChange`          | `(form: FormType) => void`                                                                                                                                 |         | A callback function that gets called when the form being built has changed.                                                                                                                                                   |
 | `onSaveComponent`   | `(component: Component, original: Component, parent: Component, path: string, index: number, isNew: boolean, originalComponentSchema: Component) => void;` |         | A callback function that gets called when a component is saved in the builder.                                                                                                                                                |
 | `onEditComponent`   | `(component: Component) => void`                                                                                                                           |         | A callback function that gets called when a component is edited.                                                                                                                                                              |
@@ -964,7 +969,10 @@ root.render(
 Inject your own markup and styling into constituent components:
 
 ```tsx
-import { SubmissionGridProps, SubmissionGrid } from '@aot-technologies/formio-react';
+import {
+	SubmissionGridProps,
+	SubmissionGrid,
+} from '@aot-technologies/formio-react';
 import { createRoot } from 'react-dom/client';
 
 const components: SubmissionTableProps['components'] = {

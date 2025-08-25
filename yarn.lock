@@ -15,6 +15,45 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
+"@aot-technologies/formiojs@file:../formio.js":
+  version "1.0.4"
+  dependencies:
+    "@formio/bootstrap" "3.1.2-rc.3"
+    "@formio/core" "2.5.1-rc.8"
+    "@formio/text-mask-addons" "^3.8.0-formio.4"
+    "@formio/vanilla-text-mask" "^5.1.1-formio.1"
+    abortcontroller-polyfill "^1.7.5"
+    autocompleter "^8.0.4"
+    bootstrap "^5.3.3"
+    browser-cookies "^1.2.0"
+    browser-md5-file "^1.1.1"
+    choices.js "^11.0.6"
+    compare-versions "^6.1.1"
+    core-js "^3.37.1"
+    dialog-polyfill "^0.5.6"
+    dom-autoscroller "^2.3.4"
+    dompurify "^3.2.4"
+    downloadjs "^1.4.7"
+    dragula "^3.7.3"
+    eventemitter3 "^5.0.1"
+    fast-deep-equal "^3.1.3"
+    fast-json-patch "^3.1.1"
+    idb "^7.1.1"
+    inputmask "^5.0.8"
+    ismobilejs "^1.1.1"
+    json-logic-js "^2.0.2"
+    jstimezonedetect "^1.0.7"
+    jwt-decode "^3.1.2"
+    lodash "^4.17.21"
+    moment "^2.29.4"
+    moment-timezone "^0.5.44"
+    quill "^2.0.2"
+    signature_pad "^4.2.0"
+    string-hash "^1.1.3"
+    tippy.js "^6.3.7"
+    uuid "^9.0.0"
+    vanilla-picker "^2.12.3"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.23.5", "@babel/code-frame@^7.24.2":
   version "7.24.2"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.24.2.tgz#718b4b19841809a58b29b68cde80bc5e1aa6d9ae"
@@ -280,11 +319,6 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@babel/runtime@^7.9.2":
-  version "7.27.6"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.27.6.tgz#ec4070a04d76bae8ddbb10770ba55714a417b7c6"
-  integrity sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==
-
 "@babel/template@^7.22.15", "@babel/template@^7.24.0", "@babel/template@^7.3.3":
   version "7.24.0"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.24.0.tgz#c6a524aa93a4a05d66aaf31654258fae69d87d50"
@@ -363,21 +397,29 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@formio/bootstrap@3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@formio/bootstrap/-/bootstrap-3.1.1.tgz#a8cceb3fd5498994c50176e5ad3866bb23667e8d"
-  integrity sha512-VXm5P5Ic3q7d5tkWaweIRAaPtBjDoov6Vv28y5aHKbR2Ri8ykMINtQJ70NwPHghW+csZmjmtKDDGDXENQVhIbA==
+"@formio/bootstrap@3.1.2-rc.3":
+  version "3.1.2-rc.3"
+  resolved "https://registry.yarnpkg.com/@formio/bootstrap/-/bootstrap-3.1.2-rc.3.tgz#7c961ed0d2802b9114539a09dfc8a744c3445813"
+  integrity sha512-ArSVnnu1e/wxAYbiGyHNp75lrgWQ2Ra1owN3bb0s2rC0zobNORECBF72p4ruITa0f4cKP/Ci8J09mduLFGdbvw==
 
-"@formio/choices.js@^10.2.1":
-  version "10.2.1"
-  resolved "https://registry.yarnpkg.com/@formio/choices.js/-/choices.js-10.2.1.tgz#d0f5c032d94f33152b6036f6a5bb42fcc4684e31"
-  integrity sha512-NCE5u7jG3XGokJP16MyAbVSUptKu/mpJYAxd4PPIoLiO/l9Do5uoOQ0MgNb9qG9qABJiOX+qNRE8q8RybY/SwQ==
+"@formio/core@2.5.1-rc.8":
+  version "2.5.1-rc.8"
+  resolved "https://registry.yarnpkg.com/@formio/core/-/core-2.5.1-rc.8.tgz#6d9ef1570f09502add875c8b6d569255604893f5"
+  integrity sha512-jScSRX7/MWJoQ+VxfvEaAIj+SoIJAeWUp+lZ3HREvyTv+Je0241hgO06c+lLuT8yOLpu0E0oyOvqc1mBr5Wpaw==
   dependencies:
-    deepmerge "^4.2.2"
-    fuse.js "^6.6.2"
-    redux "^4.2.0"
+    browser-cookies "^1.2.0"
+    core-js "^3.39.0"
+    dayjs "^1.11.12"
+    dompurify "^3.2.4"
+    eventemitter3 "^5.0.0"
+    fast-json-patch "^3.1.1"
+    fetch-ponyfill "^7.1.0"
+    inputmask "5.0.9"
+    json-logic-js "^2.0.5"
+    lodash "^4.17.21"
+    moment "^2.29.4"
 
-"@formio/core@2.5.0", "@formio/core@^2.4.0":
+"@formio/core@^2.4.0":
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/@formio/core/-/core-2.5.0.tgz#13eaec3aa8cf37255c17b3cd1681a1677d39bd5e"
   integrity sha512-UFX0ThWtW6uUaweWUd/CHCbmAW7jSnFKJ9i+9uhVny75SXF2V8vCi/B6eHQpSAash3ZKG9GV1jYMmq2uCJTuVQ==
@@ -393,47 +435,6 @@
     json-logic-js "^2.0.5"
     lodash "^4.17.21"
     moment "^2.29.4"
-
-"@formio/js@^5.1.1":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/@formio/js/-/js-5.2.0.tgz#6dbae7ff598ed029fa9a32f1b11e8fd736d5e5e8"
-  integrity sha512-tEZfzyKm2RCAZMyVsA4MagDGfi7f2LuSb1aDSgtjIkcLX2oIB4H1AtanxBVMUkdKFRqwWubJb7hzRTNqZUMdLw==
-  dependencies:
-    "@formio/bootstrap" "3.1.1"
-    "@formio/choices.js" "^10.2.1"
-    "@formio/core" "2.5.0"
-    "@formio/text-mask-addons" "^3.8.0-formio.4"
-    "@formio/vanilla-text-mask" "^5.1.1-formio.1"
-    abortcontroller-polyfill "^1.7.5"
-    autocompleter "^8.0.4"
-    bootstrap "^5.3.3"
-    browser-cookies "^1.2.0"
-    browser-md5-file "^1.1.1"
-    compare-versions "^6.0.0-rc.2"
-    core-js "^3.37.1"
-    dialog-polyfill "^0.5.6"
-    dom-autoscroller "^2.3.4"
-    dompurify "^3.2.4"
-    downloadjs "^1.4.7"
-    dragula "^3.7.3"
-    eventemitter3 "^5.0.1"
-    fast-deep-equal "^3.1.3"
-    fast-json-patch "^3.1.1"
-    idb "^7.1.1"
-    inputmask "^5.0.8"
-    ismobilejs "^1.1.1"
-    json-logic-js "^2.0.2"
-    jstimezonedetect "^1.0.7"
-    jwt-decode "^3.1.2"
-    lodash "^4.17.21"
-    moment "^2.29.4"
-    moment-timezone "^0.5.44"
-    quill "^2.0.2"
-    signature_pad "^4.2.0"
-    string-hash "^1.1.3"
-    tippy.js "^6.3.7"
-    uuid "^9.0.0"
-    vanilla-picker "^2.12.3"
 
 "@formio/text-mask-addons@^3.8.0-formio.4":
   version "3.8.0-formio.4"
@@ -1692,6 +1693,13 @@ char-regex@^1.0.2:
   resolved "https://registry.yarnpkg.com/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
   integrity sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==
 
+choices.js@^11.0.6:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/choices.js/-/choices.js-11.1.0.tgz#4fcfb5834fdf0c7d1959f0261d1bbe526a7c9222"
+  integrity sha512-mIt0uLhedHg2ea/K2PACrVpt391vRGHuOoctPAiHcyemezwzNMxj7jOzNEk8e7EbjLh0S0sspDkSCADOKz9kcw==
+  dependencies:
+    fuse.js "^7.0.0"
+
 chrome-trace-event@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.4.tgz#05bffd7ff928465093314708c93bdfa9bd1f0f5b"
@@ -1767,7 +1775,7 @@ common-tags@1.8.2:
   resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.8.2.tgz#94ebb3c076d26032745fd54face7f688ef5ac9c6"
   integrity sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==
 
-compare-versions@^6.0.0-rc.2:
+compare-versions@^6.1.1:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-6.1.1.tgz#7af3cc1099ba37d244b3145a9af5201b629148a9"
   integrity sha512-4hm4VPpIecmlg59CHXnRDnqGplJFrbLG4aFEl5vl6cK1u76ws3LLvX7ikFnTDl5vo39sjWD6AaDPYodJp/NNHg==
@@ -2694,10 +2702,10 @@ functions-have-names@^1.2.3:
   resolved "https://registry.yarnpkg.com/functions-have-names/-/functions-have-names-1.2.3.tgz#0404fe4ee2ba2f607f0e0ec3c80bae994133b834"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
 
-fuse.js@^6.6.2:
-  version "6.6.2"
-  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.6.2.tgz#fe463fed4b98c0226ac3da2856a415576dc9a111"
-  integrity sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==
+fuse.js@^7.0.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-7.1.0.tgz#306228b4befeee11e05b027087c2744158527d09"
+  integrity sha512-trLf4SzuuUxfusZADLINj+dE8clK1frKdmqiJNb1Es75fmI5oY6X2mxLVUciLLjxqw/xr72Dhy+lER6dGd02FQ==
 
 generic-names@^4.0.0:
   version "4.0.0"
@@ -4537,13 +4545,6 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
-
-redux@^4.2.0:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/redux/-/redux-4.2.1.tgz#c08f4306826c49b5e9dc901dee0452ea8fce6197"
-  integrity sha512-LAUYz4lc+Do8/g7aeRa8JkyDErK6ekstQaqWQrNRW//MY1TvCEpMtpTWvlQ+FPbWCx+Xixu/6SHt5N0HR+SB4w==
-  dependencies:
-    "@babel/runtime" "^7.9.2"
 
 reflect.getprototypeof@^1.0.6, reflect.getprototypeof@^1.0.9:
   version "1.0.10"

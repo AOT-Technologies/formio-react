@@ -35,7 +35,7 @@
 	},
 	"devDependencies": {
 		"@formio/core": "^2.4.0",
-		"@aot-technologies/formiojs": "^1.0.2",
+		"@aot-technologies/formiojs": "file:../formio.js",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/jest-dom": "^6.6.2",
 		"@testing-library/react": "^16.1.1",
@@ -71,7 +71,7 @@
 	],
 	"peerDependencies": {
 		"@formio/core": "^2.4.0",
-		"@aot-technologies/formiojs": "^1.0.2",
+		"@aot-technologies/formiojs": "file:../formio.js",
 		"react": "^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.1.0 || ^19.0.0",
 		"react-dom": "^15.3.0 || ^16.0.0 || ^17.0.0 || ^18.1.0 || ^19.0.0"
 	}

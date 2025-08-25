@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { Formio as ImportedFormio } from '@formio/js';
+import { Formio as ImportedFormio } from '@aot-technologies/formiojs';
 
 type BaseConfigurationArgs = {
 	baseUrl?: string;

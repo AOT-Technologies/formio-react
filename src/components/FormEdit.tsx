@@ -1,5 +1,5 @@
 import { useRef, ReactNode, useState } from 'react';
-import { FormBuilder as FormioFormBuilder } from '@formio/js';
+import { FormBuilder as FormioFormBuilder } from '@aot-technologies/formiojs';
 import { FormBuilder, FormBuilderProps } from './FormBuilder';
 import { Form, FormOptions, FormType, FormProps } from './Form';
 import { ComponentProp } from './FormGrid';

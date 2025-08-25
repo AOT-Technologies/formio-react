@@ -1,4 +1,4 @@
-import { Formio as Formiojs } from '@aot-technologies/formiojs/lib';
+import { Formio as Formiojs } from '@aot-technologies/formiojs';
 import * as types from './constants';
 import { selectForm } from './selectors';
 
@@ -40,6 +40,7 @@ const sendForm = (name, form) => ({
 
 export const getForm = (name, id = '', done = () => {}) => {
 	return (dispatch, getState) => {
+		console.log('LD123 - formio-react/getform');
 		// Check to see if the form is already loaded.
 		const form = selectForm(name, getState());
 		if (
@@ -68,6 +69,9 @@ export const getForm = (name, id = '', done = () => {}) => {
 			});
 	};
 };
+console.log('🚀 ~ getForm ~ getForm:', getForm);
+console.log('🚀 ~ getForm ~ getForm:', getForm);
+console.log('🚀 ~ getForm ~ getForm:', getForm);
 
 export const saveForm = (name, form, done = () => {}) => {
 	return (dispatch) => {
