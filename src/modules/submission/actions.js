@@ -41,7 +41,6 @@ export const resetSubmission = (name) => ({
 export const getSubmission =
 	(name, id, formId, done = () => {}) =>
 	(dispatch, getState) => {
-		console.log('LD123 - formio-react/getSubmission');
 		// Check to see if the submission is already loaded.
 		if (getState().id === id) {
 			return;
@@ -67,7 +66,6 @@ export const getSubmission =
 export const saveSubmission =
 	(name, data, formId, done = () => {}) =>
 	(dispatch) => {
-		console.log('LD123 - formio-react/saveSubmission');
 		dispatch(sendSubmission(name, data));
 
 		const id = data._id;
