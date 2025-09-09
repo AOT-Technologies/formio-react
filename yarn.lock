@@ -15,8 +15,9 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-"@aot-technologies/formiojs@file:../formio.js":
+"@aot-technologies/formiojs@file:../formio.js/aot-technologies-formiojs-1.0.4.tgz":
   version "1.0.4"
+  resolved "file:../formio.js/aot-technologies-formiojs-1.0.4.tgz#41fd02aa3054237c68135ee2f9ef3c4901cbbd58"
   dependencies:
     "@formio/bootstrap" "3.1.2-rc.3"
     "@formio/core" "2.5.1-rc.8"
