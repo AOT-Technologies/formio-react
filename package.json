@@ -1,5 +1,5 @@
 {
-	"name": "@aot-technologies/formio-react",
+	"name": "@leodube/formio-react",
 	"version": "1.0.5",
 	"description": "React renderer for formsflow form.io forms.",
 	"main": "lib/index.js",
