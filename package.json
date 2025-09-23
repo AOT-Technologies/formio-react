@@ -35,7 +35,7 @@
 	},
 	"devDependencies": {
 		"@formio/core": "^2.4.0",
-		"@aot-technologies/formiojs": "file:../formio.js/aot-technologies-formiojs-1.0.4.tgz",
+		"@aot-technologies/formiojs": "npm:@leodube/formiojs@1.0.4",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/jest-dom": "^6.6.2",
 		"@testing-library/react": "^16.1.1",
