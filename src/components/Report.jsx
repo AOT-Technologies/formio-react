@@ -1,31 +1,20 @@
 import { cloneDeep } from 'lodash/lang';
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import EventEmitter from 'eventemitter2';
 import _isEqual from 'lodash/isEqual';
-import { Formio } from '@aot-technologies/formiojs/lib';
+import { Formio, EventEmitter } from '@aot-technologies/formiojs';
 const FormioReport = Formio.Report;
 
 /**
  * @param {ReportProps} props
  * @returns {JSX.Element}s
  */
-const Report = (props) => {
+export const Report = (props) => {
 	let instance;
 	let createPromise;
 	let element;
 	const [formio, setFormio] = useState(undefined);
 	const jsonReport = useRef(undefined);
-
-	if (!FormioReport) {
-		return (
-			<div className="alert alert-danger" role="alert">
-				Report is not found in Formio. Please make sure that you are
-				using the Formio Reporting module and it is correctly included
-				in your application.
-			</div>
-		);
-	}
 
 	useEffect(() => () => (formio ? formio.destroy(true) : null), [formio]);
 
@@ -78,12 +67,19 @@ const Report = (props) => {
 		// eslint-disable-next-line no-undef
 		if (report && !_isEqual(report, jsonReport.current)) {
 			jsonReport.current = cloneDeep(report);
-			createReportInstance(report).then(() => {
-				if (formio) {
-					formio.form = { components: [], report };
-					return formio;
-				}
-			});
+			createReportInstance(report)
+				.then(() => {
+					if (formio) {
+						formio.form = { components: [], report };
+						return formio;
+					}
+				})
+				.catch((err) => {
+					console.error(err);
+					if (formio?.form?.report) {
+						formio.form.report = {};
+					}
+				});
 			initializeFormio();
 		}
 	}, [props.report]);
@@ -94,6 +90,16 @@ const Report = (props) => {
 			options.events = Report.getDefaultEmitter();
 		}
 	}, [props.options]);
+
+	if (!FormioReport) {
+		return (
+			<div className="alert alert-danger" role="alert">
+				Report is not found in Formio. Please make sure that you are
+				using the Formio Reporting module and it is correctly included
+				in your application.
+			</div>
+		);
+	}
 
 	return <div ref={(el) => (element = el)} />;
 };
