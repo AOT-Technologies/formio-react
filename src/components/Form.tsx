@@ -1,5 +1,5 @@
 import { CSSProperties, useEffect, useRef, useState } from 'react';
-import { EventEmitter, Form as FormClass, Webform, Utils } from '@formio/js';
+import { EventEmitter, Form as FormClass, Webform, Utils } from '@aot-technologies/formiojs';
 import { Component, Form as CoreFormType } from '@formio/core';
 import structuredClone from '@ungap/structured-clone';
 
@@ -14,6 +14,14 @@ export type JSON =
 	| undefined
 	| JSON[]
 	| { [key: string]: JSON };
+
+// Webform inherits destroy/onAny/offAny from Element in @formio/js, but the type chain
+// is incomplete in @formio/js >=5.4.0 — augment locally until upstream fixes it.
+type WebformInstance = Webform & {
+	destroy: (all?: boolean) => void;
+	onAny: (fn: (...args: any[]) => void) => void;
+	offAny: (fn: (...args: any[]) => void) => void;
+};
 
 // TODO: once events is typed correctly in @formio/js options, we can remove this override
 // TODO: `currentForm` is an option that will be deprecated once we update the Action settings form on the server
@@ -233,7 +241,7 @@ const createWebformInstance = async (
 		? new FormConstructor(element, formSource, options)
 		: new FormClass(element, formSource, options);
 	const instance = await promise.ready;
-	return instance;
+	return instance as WebformInstance;
 };
 
 // Define effective props (aka I want to rename these props but also maintain backwards compatibility)
@@ -267,7 +275,7 @@ export const Form = (props: FormProps) => {
 		className,
 		...handlers
 	} = props;
-	const [formInstance, setFormInstance] = useState<Webform | null>(null);
+	const [formInstance, setFormInstance] = useState<WebformInstance | null>(null);
 	const isMounted = useRef(false);
 
 	useEffect(() => {
@@ -282,7 +290,7 @@ export const Form = (props: FormProps) => {
 		isMounted.current = true;
 		return () => {
 			isMounted.current = false;
-		}
+		};
 	}, []);
 
 	useEffect(() => {

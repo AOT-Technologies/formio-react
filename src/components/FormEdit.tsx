@@ -1,12 +1,12 @@
 import { useRef, ReactNode, useState } from 'react';
-import { FormBuilder as FormioFormBuilder } from '@formio/js';
+import { FormBuilder as FormioFormBuilder } from '@aot-technologies/formiojs';
 import { FormBuilder, FormBuilderProps } from './FormBuilder';
 import { Form, FormOptions, FormType, FormProps } from './Form';
 import { ComponentProp } from './FormGrid';
 import { useFormioContext } from '../hooks/useFormioContext';
 import { Form as CoreFormType } from '@formio/core';
 import Errors from './Errors';
-import { fastCloneDeep } from '@formio/js/utils';
+import { fastCloneDeep } from '@aot-technologies/formiojs/utils';
 
 type FormEditProps = {
 	initialForm?: FormType;
@@ -227,11 +227,11 @@ export const FormEdit = ({
 	const builderRef = useRef<FormioFormBuilder | null>(null);
 
 	const handleSaveForm = async () => {
-    const currentForm = builderRef.current?.form as FormType;
-    if (!currentForm) {
-      console.warn("Could not find current form when trying to save");
-      return;
-    }
+		const currentForm = builderRef.current?.form as FormType;
+		if (!currentForm) {
+			console.warn('Could not find current form when trying to save');
+			return;
+		}
 		const formToSave: FormType = {
 			...currentForm,
 			...settingsFormData.current,

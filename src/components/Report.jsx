@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash/lang';
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import _isEqual from 'lodash/isEqual';
-import { Formio, EventEmitter } from '@formio/js';
+import { Formio, EventEmitter } from '@aot-technologies/formiojs';
 const FormioReport = Formio.Report;
 
 /**

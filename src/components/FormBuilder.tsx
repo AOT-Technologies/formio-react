@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { FormBuilder as FormioFormBuilder, Utils } from '@formio/js';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { FormBuilder as FormioFormBuilder, Utils } from '@aot-technologies/formiojs';
 import { Component } from '@formio/core';
 import structuredClone from '@ungap/structured-clone';
 
@@ -24,7 +24,7 @@ export type FormBuilderProps = {
 		index: number,
 		originalComponentSchema: Component,
 		path: string,
-		isNew: boolean
+		isNew: boolean,
 	) => void;
 	onAddComponent?: (
 		component: Component,
@@ -42,78 +42,73 @@ export type FormBuilderProps = {
 	) => void;
 };
 
-const toggleEventHandlers = (
-	builder: FormioFormBuilder,
-	handlers: Omit<FormBuilderProps, 'options' | 'form' | 'Builder'>,
-	shouldAttach: boolean = true,
-) => {
-	const fn = shouldAttach ? 'on' : 'off';
-	const {
-		onSaveComponent,
-		onEditComponent,
-		onUpdateComponent,
-		onDeleteComponent,
-		onChange,
-	} = handlers;
-	builder.instance?.[fn](
-		'saveComponent',
-		(
-			component: Component,
-			original: Component,
-			parent: Component,
-			path: string,
-			index: number,
-			isNew: boolean,
-			originalComponentSchema: Component,
-		) => {
-			onSaveComponent?.(
-				component,
-				parent,
-				index,
-				originalComponentSchema,
-				path,
-				isNew
-			);
-			onChange?.(structuredClone(builder.instance?.form));
-		},
-	);
-	builder.instance?.[fn]('updateComponent', (component: Component) => {
-		onUpdateComponent?.(component);
-		onChange?.(structuredClone(builder.instance.form));
-	});
-	builder.instance?.[fn](
-		'removeComponent',
-		(
-			component: Component,
-			parent: Component,
-			path: string,
-			index: number,
-		) => {
-			onDeleteComponent?.(component, parent, path, index);
-			onChange?.(structuredClone(builder.instance?.form));
-		},
-	);
+function createCustomConditions(
+	component: string,
+	operator: string,
+	value: string,
+	existingCustomConditional: string | undefined,
+): string {
+	let condition = '';
+	switch (operator) {
+		case 'isEqual':
+			condition = `data.${component} && data.${component} == '${value}'`;
+			break;
+		case 'isNotEqual':
+			condition = `data.${component} && data.${component} != '${value}'`;
+			break;
+		case 'isEmpty':
+			condition = `!data.${component}`;
+			break;
+		case 'isNotEmpty':
+			condition = `!!data.${component}`;
+			break;
+		case 'includes':
+			condition = `data.${component} && data.${component}.includes('${value}')`;
+			break;
+		case 'notIncludes':
+			condition = `data.${component} && !data.${component}.includes('${value}')`;
+			break;
+		case 'endsWith':
+			condition = `data.${component} && data.${component}.endsWith('${value}')`;
+			break;
+		default:
+			break;
+	}
+	if (existingCustomConditional) {
+		if (existingCustomConditional.endsWith(';')) {
+			return existingCustomConditional.slice(0, -1) + ' && ' + condition;
+		}
+		return existingCustomConditional + ' && ' + condition;
+	}
+	return `show = ${condition}`;
+}
 
-	builder.instance?.[fn]('cancelComponent', (component: Component) => {
-		onUpdateComponent?.(component);
-		onChange?.(structuredClone(builder.instance?.form));
+function iterateConditionsAndSetLogic(components: any[]): any[] {
+	components.forEach((comp) => {
+		if (comp?.conditional?.conditions) {
+			comp.conditional.conditions.forEach((condition: any) => {
+				comp.customConditional = createCustomConditions(
+					condition.component,
+					condition.operator,
+					condition.value,
+					comp.customConditional,
+				);
+			});
+		}
+		if (comp.customConditional && !comp.customConditional.endsWith(';')) {
+			comp.customConditional = comp.customConditional.concat(';');
+		}
 	});
+	return components;
+}
 
-	builder.instance?.[fn]('editComponent', (component: Component) => {
-		onEditComponent?.(component);
-		onChange?.(structuredClone(builder.instance?.form));
-	});
-
-	builder.instance?.[fn]('addComponent', () => {
-		onChange?.(structuredClone(builder.instance?.form));
-	});
-
-	builder.instance?.[fn]('pdfUploaded', () => {
-		onChange?.(structuredClone(builder.instance?.form));
-	});
-	builder.instance?.[fn]('setDisplay', () => {
-		onChange?.(structuredClone(builder.instance?.form));
-	});
+// Read the builder's current form safely: guard that the instance is still
+// alive (.events is deleted by teardown() on destroy) and that form is truthy.
+const readForm = (builderRef: FormioFormBuilder): FormType | undefined => {
+	const inst = builderRef.instance;
+	if (!inst || !(inst as any).events) return undefined;
+	const form = inst.form as FormType | undefined;
+	return form ?? undefined;
 };
 
 const createBuilderInstance = async (
@@ -121,7 +116,10 @@ const createBuilderInstance = async (
 	formSource: FormSource | undefined,
 	element: HTMLDivElement,
 	options: FormBuilderProps['options'] = {},
-	setBuiderStatus: (builder: FormioFormBuilder, ready: boolean) => void = () => {}
+	setBuiderStatus: (
+		builder: FormioFormBuilder,
+		ready: boolean,
+	) => void = () => {},
 ): Promise<FormioFormBuilder> => {
 	const builder = BuilderConstructor
 		? new BuilderConstructor(element, formSource, options)
@@ -137,8 +135,27 @@ export const FormBuilder = ({
 	Builder,
 	initialForm,
 	onBuilderReady,
-	...handlers
+	onChange,
+	onSaveComponent,
+	onAddComponent,
+	onEditComponent,
+	onUpdateComponent,
+	onDeleteComponent,
 }: FormBuilderProps) => {
+	// Memoize so the useEffect([builderInstance, handlers]) doesn't re-run (and detach/re-attach
+	// all 8 formio event listeners) on every parent render. Without this, any parent state
+	// change (e.g. a Redux update triggered by onChange) causes needless listener churn.
+	const handlers = useMemo(
+		() => ({
+			onChange,
+			onSaveComponent,
+			onAddComponent,
+			onEditComponent,
+			onUpdateComponent,
+			onDeleteComponent,
+		}),
+		[onChange, onSaveComponent, onAddComponent, onEditComponent, onUpdateComponent, onDeleteComponent],
+	);
 	const renderElement = useRef<HTMLDivElement | null>(null);
 	const [builderInstance, setBuilderInstance] =
 		useState<FormioFormBuilder | null>(null);
@@ -183,8 +200,8 @@ export const FormBuilder = ({
 				initialForm && typeof initialForm !== 'string'
 					? structuredClone(initialForm)
 					: null;
-             // destroy prev builder that is not ready before to create the new one
-			 if (pendingBuilder.current) {
+			// destroy prev builder that is not ready before to create the new one
+			if (pendingBuilder.current) {
 				const prevBuilder = pendingBuilder.current;
 				// wait the prev builder to be ready before destroying it
 				await prevBuilder.ready;
@@ -192,8 +209,8 @@ export const FormBuilder = ({
 				prevBuilder.instance?.destroy(true);
 				prevBuilder.destroy(true);
 				pendingBuilder.current = null;
-		    }
-			
+			}
+
 			const builder = await createBuilderInstance(
 				Builder,
 				currentFormSourceJsonProp.current || initialForm,
@@ -201,7 +218,7 @@ export const FormBuilder = ({
 				options,
 				(builder, ready) => {
 					pendingBuilder.current = ready ? null : builder;
-				}
+				},
 			);
 
 			if (builder) {
@@ -215,7 +232,7 @@ export const FormBuilder = ({
 				}
 				setBuilderInstance((prevInstance) => {
 					if (prevInstance) {
-					  prevInstance.instance?.destroy(true);
+						prevInstance.instance?.destroy(true);
 						prevInstance.destroy(true);
 					}
 					return builder;
@@ -229,14 +246,94 @@ export const FormBuilder = ({
 	}, [Builder, initialForm, onBuilderReady, options]);
 
 	useEffect(() => {
-		if (builderInstance && Object.keys(handlers).length > 0) {
-			toggleEventHandlers(builderInstance, handlers);
-		}
+		if (!builderInstance) return;
+		const inst = builderInstance.instance;
+		// Guard: instance must exist and not yet be destroyed (teardown deletes .events)
+		if (!inst || !(inst as any).events) return;
+
+		const {
+			onSaveComponent,
+			onEditComponent,
+			onUpdateComponent,
+			onDeleteComponent,
+			onChange,
+		} = handlers;
+
+		let live = true;
+
+		// Read form safely: check .events (destroyed guard) then the form value itself.
+		const guard = () => {
+			if (!live) return;
+			const form = readForm(builderInstance);
+			if (form) {
+				if (form.components) {
+					form.components = iterateConditionsAndSetLogic(form.components);
+				}
+				onChange?.(structuredClone(form));
+			}
+		};
+
+		// Named handler functions — the exact same reference must be passed to both
+		// .on() and .off(). Anonymous functions passed to .off() never match the stored
+		// listener (compared by reference) so the call is always a no-op.
+		const onSaveHandler = (
+			component: Component,
+			original: Component,
+			parent: Component,
+			path: string,
+			index: number,
+			isNew: boolean,
+			originalComponentSchema: Component,
+		) => {
+			if (!live) return;
+			onSaveComponent?.(component, parent, index, originalComponentSchema, path, isNew);
+			guard();
+		};
+		const onUpdateHandler = (component: Component) => {
+			if (!live) return;
+			onUpdateComponent?.(component);
+			guard();
+		};
+		const onRemoveHandler = (component: Component, parent: Component, path: string, index: number) => {
+			if (!live) return;
+			onDeleteComponent?.(component, parent, path, index);
+			guard();
+		};
+		const onCancelHandler = (component: Component) => {
+			if (!live) return;
+			onUpdateComponent?.(component);
+			guard();
+		};
+		const onEditHandler = (component: Component) => {
+			if (!live) return;
+			onEditComponent?.(component);
+			// Do NOT call onChange here: opening the edit modal does not mutate the form schema.
+			// Firing onChange here triggers an unnecessary Redux update + React re-render on every
+			// component click and every drag-drop, causing visible lag.
+		};
+		const onAddHandler = () => { if (!live) return; guard(); };
+		const onPdfHandler = () => { if (!live) return; guard(); };
+		const onDisplayHandler = () => { if (!live) return; guard(); };
+
+		inst.on('saveComponent', onSaveHandler);
+		inst.on('updateComponent', onUpdateHandler);
+		inst.on('removeComponent', onRemoveHandler);
+		inst.on('cancelComponent', onCancelHandler);
+		inst.on('editComponent', onEditHandler);
+		inst.on('addComponent', onAddHandler);
+		inst.on('pdfUploaded', onPdfHandler);
+		inst.on('setDisplay', onDisplayHandler);
 
 		return () => {
-			if (builderInstance) {
-				toggleEventHandlers(builderInstance, handlers, false);
-			}
+			live = false;
+			inst.off('saveComponent', onSaveHandler);
+			inst.off('updateComponent', onUpdateHandler);
+			inst.off('removeComponent', onRemoveHandler);
+			inst.off('cancelComponent', onCancelHandler);
+			inst.off('editComponent', onEditHandler);
+			inst.off('addComponent', onAddHandler);
+			inst.off('pdfUploaded', onPdfHandler);
+			inst.off('setDisplay', onDisplayHandler);
 		};
 	}, [builderInstance, handlers]);
 

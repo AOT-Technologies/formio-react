@@ -1,4 +1,4 @@
-import { Formio } from '@formio/js';
+import { Formio } from '@aot-technologies/formiojs';
 const Field = Formio.Components.components.field;
 
 /**
