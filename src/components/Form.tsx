@@ -341,7 +341,7 @@ export const Form = (props: FormProps) => {
 				if (formReadyCallback) {
 					formReadyCallback(instance);
 				}
-				setFormInstance((prevInstance) => {
+				setFormInstance((prevInstance: WebformInstance | null) => {
 					if (prevInstance) {
 						prevInstance.destroy(true);
 					}

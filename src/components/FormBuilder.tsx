@@ -230,7 +230,7 @@ export const FormBuilder = ({
 				if (onBuilderReady) {
 					onBuilderReady(builder);
 				}
-				setBuilderInstance((prevInstance) => {
+				setBuilderInstance((prevInstance: FormioFormBuilder | null) => {
 					if (prevInstance) {
 						prevInstance.instance?.destroy(true);
 						prevInstance.destroy(true);
