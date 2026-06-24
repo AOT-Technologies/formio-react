@@ -1,4 +1,4 @@
-import { Formio as Formiojs } from '@aot-technologies/formiojs/lib';
+import { Formio as Formiojs } from '@aot-technologies/formiojs';
 import * as types from './constants';
 import { selectForm } from './selectors';
 

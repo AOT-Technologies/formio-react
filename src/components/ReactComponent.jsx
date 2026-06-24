@@ -1,6 +1,9 @@
-import { Formio } from '@aot-technologies/formiojs/lib';
+import { Formio } from '@aot-technologies/formiojs';
 const Field = Formio.Components.components.field;
 
+/**
+ * @deprecated ReactComponent will be deprecated in the next major version of \@formio/react. Please consider using a custom @formio/js component.
+ */
 export default class ReactComponent extends Field {
 	/**
 	 * This is the first phase of component building where the component is instantiated.
@@ -10,6 +13,9 @@ export default class ReactComponent extends Field {
 	 * @param data - The submission data where this component's data exists.
 	 */
 	constructor(component, options, data) {
+		console.warn(
+			'ReactComponent will be deprecated in the next major version of @formio/react. Please consider using a custom @formio/js component.',
+		);
 		super(component, options, data);
 		this.reactInstance = null;
 	}
@@ -19,6 +25,9 @@ export default class ReactComponent extends Field {
 	 * components using the this.on() function.
 	 */
 	init() {
+		console.warn(
+			'ReactComponent will be deprecated in the next major version of @formio/react. Please consider using a custom @formio/js component.',
+		);
 		return super.init();
 	}
 
@@ -107,6 +116,7 @@ export default class ReactComponent extends Field {
 	 * @param ref - callback ref
 	 */
 	attachReact(element, ref) {
+		console.log(element, ref);
 		return;
 	}
 
@@ -114,6 +124,7 @@ export default class ReactComponent extends Field {
 	 * Override this function.
 	 */
 	detachReact(element) {
+		console.log(element);
 		return;
 	}
 
@@ -190,6 +201,7 @@ export default class ReactComponent extends Field {
 	 * @returns {boolean}
 	 */
 	validate(data, dirty, rowData) {
+		console.log(data, dirty, rowData);
 		return true;
 	}
 }
