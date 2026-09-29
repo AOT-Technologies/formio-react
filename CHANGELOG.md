@@ -5,7 +5,67 @@ All notable changes to this project will be documented in this file
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased: 5.4.0-rc.1]
+## 6.1.0
+
+### Changed
+
+-   Official Release
+
+## 6.1.0-rc.5
+
+### Changed
+
+-   No breaking changes requiring major version bump, moving to minor patch instead of major.
+-   FIO-9881: upgraded up to React 19
+-   FIO-9678: fixed an issue where number value is not displayed is submission grid
+-   FIO-9671: fix Next pagination button
+-   do not recreate form instance if the form json is not changed deeply
+-   refactored Form component code to prevent the exhaustive-deps error for useEffect
+-   FIO-9589: fixed an issue where form does not work correctly after the react form component rerendering
+-   FIO-9584: removed pdf display option from builder
+-   FIO-9592: Fix default submit button
+-   FIO-9590: Add showing error when trying to save duplicate form names
+-   FIO-9413: Fix library license check
+-   FIO-9944: Fixes an issue where some form instances will not be destroyed
+-   Unpin formiojs and core peer dependencies
+
+## 7.0.0-rc.2
+
+### Changed
+
+-   Unpin formiojs and core peer dependencies
+
+## 7.0.0-rc.1
+
+### Changed
+
+-   FIO-9944: Fixes an issue where some form instances will not be destroyed
+-   FIO-9881: upgrated up to React19
+-   FIO-9678: fixed an issue where number value is not displayed is submission grid
+-   FIO-9671: fix Next pagination button
+-   do not recreate form instance if the form json is not changed deeply
+-   refactored Form component code to prevent the exhaustive-deps error for useEffect
+-   FIO-9589: fixed an issue where form does not work correctly after the react form component rerendering
+-   FIO-9584: removed pdf display option from builder
+-   FIO-9592: Fix default submit button
+-   FIO-9590: Add showing error when trying to save duplicate form names
+-   FIO-9413: Fix library license check
+
+## 6.0.0
+
+### Changed
+
+-   Official Release
+
+## 6.0.0-rc.4
+
+-   do not recreate form instance if the form json is not changed deeply
+
+## 6.0.0-rc.3
+
+-   Initialize 6.0.x branch
+
+## 6.0.0-rc.1
 
 ### Changed
 
@@ -15,6 +75,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 -   Bump @babel/traverse from 7.21.5 to 7.23.2
 -   FIO-7489 formio js 5/bootstrap 5 updates to react library
 -   pass down a ref callback to custom component instead of relying on the return value of ReactDOM.render
+-   FIO-7733: React Updates
+-   FIO-8943: upgrade dev dependencies to latest rcs; fix type error
 
 ## 5.3.0
 

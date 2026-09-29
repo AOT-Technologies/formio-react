@@ -1,4 +1,4 @@
-import { Formio } from '@aot-technologies/formiojs/lib';
+import { Formio } from '@aot-technologies/formiojs';
 const Webform = Formio.Webform;
 const WebformBuilder = Formio.WebformBuilder;
 const Wizard = Formio.Wizard;
@@ -7,13 +7,11 @@ const WizardBuilder = Formio.WizardBuilder;
 export { Webform, WebformBuilder, Wizard, WizardBuilder };
 
 export * from './components';
+export { useFormioContext } from './hooks/useFormioContext';
+export { usePagination } from './hooks/usePagination';
+export { FormioProvider } from './contexts/FormioContext';
 export * from './constants';
 export * from './modules';
 export * from './types';
 export * from './utils';
-export {
-	Components,
-	Formio,
-	Utils,
-	Templates,
-} from '@aot-technologies/formiojs/lib';
+export { Components, Utils, Templates, Formio } from '@aot-technologies/formiojs';

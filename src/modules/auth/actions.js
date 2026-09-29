@@ -1,4 +1,4 @@
-import { Formio as formiojs } from '@aot-technologies/formiojs/lib';
+import { Formio as formiojs } from '@aot-technologies/formiojs';
 import * as type from './constants';
 
 const requestUser = () => ({
